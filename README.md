@@ -1,203 +1,194 @@
-# Smart-Waste-Management-System
-Smart Waste Management System built using Node-RED and Twilio SMS API to monitor waste bin levels in real-time. The system validates input, visualizes data using dashboard gauges and charts, and automatically sends SMS alerts when the bin reaches a threshold, improving efficiency and preventing overflow.
-Project Overview
+# ♻️ Smart Waste Management System  
+### IoT-Based Waste Monitoring using Node-RED & Twilio SMS  
 
-The Smart Waste Management System is an IoT-based monitoring solution developed using Node-RED Dashboard and Twilio SMS API.
+---
+
+## 📌 Project Overview
+
+The **Smart Waste Management System** is an IoT-based monitoring solution developed using **Node-RED Dashboard** and **Twilio SMS API**.
 
 This system:
 
-Accepts bin level input (0–100%)
+- Accepts bin level input (0–100%)
+- Displays real-time gauge and chart
+- Sends SMS alerts when bin level ≥ 75%
+- Sends normal status SMS when below threshold
 
-Displays real-time gauge & chart
+Flow file included in this repository:  
+📂 `flows.json`
 
-Sends SMS alerts when the bin is full (≥75%)
+---
 
-Sends normal status SMS when below threshold
+## 🏗️ System Architecture
 
-Your uploaded Node-RED flow file:
-📂 flows.json 
+### 1️⃣ Node-RED Dashboard
 
-flows
+Used for:
 
-🛠️ System Architecture
-1️⃣ Node-RED Dashboard
-4
+- Creating flow logic  
+- Designing dashboard UI  
+- Handling threshold validation  
+- Connecting Twilio SMS API  
 
-Used For:
+### 2️⃣ Twilio SMS Integration
 
-Creating flow logic
+Used for:
 
-Designing dashboard UI
+- Sending SMS when bin ≥ 75%  
+- Sending normal status SMS  
+- Alerting user or municipal authority  
 
-Handling threshold validation
+---
 
-Connecting Twilio SMS API
+## 💻 Installation Guide
 
-2️⃣ Twilio SMS Integration
-4
+### Step 1: Install Node.js
 
-Used For:
+1. Download from: https://nodejs.org  
+2. Install LTS version  
+3. Verify installation:
 
-Sending SMS when bin ≥ 75%
-
-Sending normal status SMS
-
-Alerting municipal authority / user
-
-💻 How to Download & Install Node-RED
-Step 1: Install Node.js
-
-Download from: https://nodejs.org
-
-Install LTS version
-
-Verify installation:
-
+```bash
 node -v
 npm -v
-Step 2: Install Node-RED
+```
 
-Open Command Prompt:
+---
 
+### Step 2: Install Node-RED
+
+Open Command Prompt and run:
+
+```bash
 npm install -g --unsafe-perm node-red
+```
 
 Start Node-RED:
 
+```bash
 node-red
+```
 
 Open in browser:
 
+```
 http://localhost:1880
-📦 Install Required Nodes
+```
 
-Open Node-RED → Menu → Manage Palette → Install:
+---
+
+## 📦 Install Required Nodes
+
+In Node-RED:
+
+Menu → Manage Palette → Install  
 
 Install:
 
-node-red-dashboard
+- node-red-dashboard  
+- node-red-node-twilio  
 
-node-red-node-twilio
+Or use terminal:
 
-Or use command:
-
+```bash
 cd ~/.node-red
 npm install node-red-dashboard
 npm install node-red-node-twilio
+```
 
-Restart Node-RED.
+Restart Node-RED after installation.
 
-📂 How to Import Your Project Flow
+---
 
-Open Node-RED
+## 📂 Import Project Flow
 
-Click ☰ Menu → Import
+1. Open Node-RED  
+2. Click ☰ Menu → Import  
+3. Select `flows.json`  
+4. Click **Import**  
+5. Click **Deploy**
 
-Select your file:
+Dashboard will be available at:
 
-flows.json
-
-Click Import
-
-Click Deploy
-
-Your dashboard will appear at:
-
+```
 http://localhost:1880/ui
-📱 How to Create Twilio Account
+```
 
-Go to https://www.twilio.com
+---
 
-Sign up (Free trial available)
+## 📱 Twilio Account Setup
 
-After login, go to Console Dashboard
+1. Go to https://www.twilio.com  
+2. Create an account  
+3. Open Console Dashboard  
+4. Copy:
+   - Account SID  
+   - Auth Token  
+5. Get a Twilio phone number  
 
-Copy:
+---
 
-Account SID
+## 🔑 Configure Twilio in Node-RED
 
-Auth Token
+1. Double-click **Twilio Out Node**  
+2. Click edit (✏️) next to configuration  
+3. Enter:
+   - Account SID  
+   - Auth Token  
+   - Twilio Phone Number  
+4. Click **Add → Done → Deploy**
 
-Buy / Get a Twilio phone number
+---
 
-🔑 How to Configure Twilio in Node-RED
+## 🔄 Flow Logic Explanation
 
-In your flow file 
+### 1️⃣ Bin Level Input
+User enters value between 0–100.
 
-flows
+### 2️⃣ Validation Function
+- Rejects non-numeric values  
+- Rejects values < 0 or > 100  
+- Passes valid input forward  
 
- the Twilio node is already present.
+### 3️⃣ Threshold Check (Switch Node)
 
-To configure:
+- ≥ 75 → Bin Full  
+- < 75 → Bin OK  
 
-Double-click Twilio Out Node
+### 4️⃣ SMS Notification
 
-Click ✏️ edit next to Twilio configuration
+- "Bin Full" SMS sent when threshold exceeded  
+- "Bin OK" SMS sent when below threshold  
 
-Enter:
+### 5️⃣ Dashboard Output
 
-Account SID
+- Live Gauge (percentage view)  
+- Real-time Chart  
+- Debug messages for errors  
 
-Auth Token
+---
 
-Twilio Phone Number (From Number)
-
-Click Add → Done → Deploy
-
-📊 Flow Logic Explanation
-
-Your Flow Contains:
-
-🔹 1. Bin Level Input (UI Text Input)
-
-User enters value (0–100)
-
-🔹 2. Validate Function
-
-Checks:
-
-If not number → error
-
-If <0 or >100 → invalid
-
-Else → pass to next node
-
-🔹 3. Switch Node (Threshold Check)
-
-Condition:
-
-If ≥ 75 → Bin Full
-
-If < 75 → Bin OK
-
-🔹 4. Twilio SMS Nodes
-
-Bin Full SMS
-
-Bin OK SMS
-
-🔹 5. Dashboard Components
-
-Gauge (Live percentage)
-
-Chart (Time-based graph)
-
-Debug node (Error display)
-
-📨 How SMS Works
+## 📨 SMS Alert Messages
 
 If bin level ≥ 75:
 
+```
 Alert: Waste bin is full. Immediate action required!
+```
 
 If bin level < 75:
 
+```
 Bin status normal.
+```
 
-You can customize message inside Twilio node:
+Messages can be customized using a Function node before the Twilio node.
 
-Set msg.payload before Twilio node using Function node.
+---
 
-📂 Project Folder Structure (GitHub)
+## 📁 Project Structure
+
+```
 smart-waste-management/
 │
 ├── flows.json
@@ -207,20 +198,48 @@ smart-waste-management/
 │   ├── flow.png
 │
 └── package.json (optional)
-🚀 How to Run the Project
+```
 
-Install Node.js
+---
 
-Install Node-RED
+## 🚀 How to Run the Project
 
-Install dashboard & twilio nodes
+1. Install Node.js  
+2. Install Node-RED  
+3. Install required nodes  
+4. Import `flows.json`  
+5. Configure Twilio credentials  
+6. Deploy  
+7. Open:
 
-Import flows.json
-
-Configure Twilio credentials
-
-Deploy
-
-Open:
-
+```
 http://localhost:1880/ui
+```
+
+---
+
+## ✨ Features
+
+- Real-time waste level monitoring  
+- Automatic SMS alerts  
+- Threshold-based automation  
+- Dashboard visualization  
+- Input validation  
+- Easy IoT integration  
+
+---
+
+## 🔮 Future Enhancements
+
+- ESP8266 / ESP32 sensor integration  
+- Ultrasonic sensor automation  
+- Cloud database integration  
+- GPS tracking  
+- AI-based waste prediction  
+- Mobile app integration  
+
+---
+
+## 📜 License
+
+This project is developed for educational and research purposes.
